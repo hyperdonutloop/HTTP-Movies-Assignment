@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import MovieCard from './MovieCard';
 import axios from 'axios';
 
-//each section that needs to be edited requires its own state
-
 //main function to update the movie card
 const UpdateMovie = () => {
   const [ editMovie, setEditMovie ] = useState({
@@ -49,34 +47,51 @@ const UpdateMovie = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-  }
+    axios
+      .put(`http://localhost:5000/api/movies/${updateMovie.id}`, editMovie)
+      .then(response => {
+        console.log('testing handleSubmit bro', response.data);
+        
+        props.history.push('/');
+      });
+  };
 
   return (
     <div>
       <h1>Update Movie</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="title"
-          placeholder="movie title" 
+          placeholder="movie title"
+          onChange={handleChanges}
+          value={editMovie.title}
         />
         <input
           type="text"
           name="director"
           placeholder="director" 
+          onChange={handleChanges}
+          value={editMovie.director}
         />
         <input
           type="text"
           name="metascore"
-          placeholder="metascore" 
+          placeholder="metascore"
+          onChange={handleChanges} 
+          value={editMovie.metascore}
         />
         <input
           type="text"
           name="stars"
           placeholder="stars" 
+          onChange={handleChanges}
+          value={editMovie.stars}
         />
+        <button type="submit">Update Movie!</button>
       </form>
     </div>
   )
 }
 
+export default updateMovie;
