@@ -32,11 +32,6 @@ export default class Movie extends React.Component {
     addToSavedList(this.state.movie);
   };
 
-  render() {
-    if (!this.state.movie) {
-      return <div>Loading movie information...</div>;
-    }
-  
   //url has to be an interpolated string so that we can identify the exact movie being deleted?
   //after movie has been deleted routing user back to movies-list
   deleteMovie = () => {
@@ -51,12 +46,20 @@ export default class Movie extends React.Component {
       })
   };
 
+  render() {
+    if (!this.state.movie) {
+      return <div>Loading movie information...</div>;
+    }
     return (
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
+        <button onClick={() => 
+          this.props.history.push(`/update-movie/${this.state.movie.id}`)
+        }>Update</button>
+        <button onClick={this.deleteMovie}>Delete</button>
       </div>
     );
   }

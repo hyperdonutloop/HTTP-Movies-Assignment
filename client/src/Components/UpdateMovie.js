@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import MovieCard from './MovieCard';
 import axios from 'axios';
 
 //main function to update the movie card
-const UpdateMovie = () => {
+const UpdateMovie = (props) => {
   const [ editMovie, setEditMovie ] = useState({
     title: '',
     director: '',
@@ -48,10 +47,9 @@ const UpdateMovie = () => {
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .put(`http://localhost:5000/api/movies/${updateMovie.id}`, editMovie)
+      .put(`http://localhost:5000/api/movies/${editMovie.id}`, editMovie)
       .then(response => {
         console.log('testing handleSubmit bro', response.data);
-        
         props.history.push('/');
       });
   };
@@ -94,4 +92,4 @@ const UpdateMovie = () => {
   )
 }
 
-export default updateMovie;
+export default UpdateMovie;
